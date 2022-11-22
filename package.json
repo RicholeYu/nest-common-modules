@@ -5,7 +5,8 @@
   "main": "dist/apps/mono/main.js",
   "types": "dist/apps/mono/main.d.ts",
   "scripts": {
-    "start": "nest start mono --tsc -w"
+    "start": "nest start mono --tsc -w",
+    "postinstall": "nest build mono --tsc"
   },
   "dependencies": {
     "@azure/service-bus": "^7.7.3",
