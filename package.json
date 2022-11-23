@@ -2,7 +2,8 @@
   "name": "@pruforce-coe/common-nest-module",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/apps/common-nest-module/main.js",
+  "type": "dist/apps/common-nest-module/main.ts",
   "scripts": {
     "build": "nest build common-nest-module --tsc -w"
   },
