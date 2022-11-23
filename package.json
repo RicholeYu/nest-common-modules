@@ -5,12 +5,10 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "prestart": "npm run clean",
     "start": "nest start --tsc -w",
-    "prebuild": "npm run clean",
-    "build": "nest build --tsc -c tsconfig.json",
+    "build": "nest build --tsc",
     "postbuild": "cp -r src/* dist/",
-    "clean": "rimraf dist"
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@azure/service-bus": "^7.7.3",
@@ -32,7 +30,9 @@
     "node-vault": "^0.9.22",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0",
+    "rxjs": "^7.2.0"
+  },
+  "devDependencies": {
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
