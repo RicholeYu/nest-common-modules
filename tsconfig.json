@@ -15,9 +15,8 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": [
-      "ES2019.Array",
-      "ES2020.Promise"
-    ],
-    "paths": {}
+      "ES2020.Promise",
+      "ES2019.Array"
+    ]
   }
 }
