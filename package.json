@@ -4,7 +4,6 @@
   "description": "",
   "main": "dist/apps/common-nest-module/main.js",
   "types": "dist/apps/common-nest-module/main.d.ts",
-  "type": "module",
   "scripts": {
     "build": "nest build common-nest-module --tsc -w"
   },

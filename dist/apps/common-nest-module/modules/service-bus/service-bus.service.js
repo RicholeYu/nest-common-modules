@@ -25,6 +25,10 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
     }
     constructor(restService) {
         this.restService = restService;
+        this.topicSendersCache = {};
+        this.topicReceiversCache = {};
+        this.queueSendersCache = {};
+        this.queueReceiversCache = {};
         this.logger = new common_1.Logger(ServiceBusService_1.name);
     }
     getConnectionString(type, policy, name) {
