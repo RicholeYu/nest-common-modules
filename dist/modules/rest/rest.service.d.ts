@@ -3,7 +3,8 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 export declare class RestService {
     private readonly httpService;
     constructor(httpService: HttpService);
-    request<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T, any>>;
+    get axiosRef(): import("axios").AxiosInstance;
+    request(config: AxiosRequestConfig): Promise<AxiosResponse>;
     delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse>;
     get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse>;
     head(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse>;

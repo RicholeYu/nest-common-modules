@@ -1,14 +1,13 @@
 import { MessageHandlers } from '@azure/service-bus';
-import { Logger, OnModuleInit } from '@nestjs/common';
+import { OnModuleInit } from '@nestjs/common';
 import { RestService } from '../rest/rest.service';
-import { ReceiversCache, SendersCache } from './service-bus.type';
 export declare class ServiceBusService implements OnModuleInit {
     private readonly restService;
-    topicSendersCache: SendersCache;
-    topicReceiversCache: ReceiversCache;
-    queueSendersCache: SendersCache;
-    queueReceiversCache: ReceiversCache;
-    logger: Logger;
+    private topicSendersCache;
+    private topicReceiversCache;
+    private queueSendersCache;
+    private queueReceiversCache;
+    private logger;
     onModuleInit(): void;
     constructor(restService: RestService);
     private getConnectionString;

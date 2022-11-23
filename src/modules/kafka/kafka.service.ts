@@ -10,14 +10,14 @@ import {ConsumerCache, ProducerCache} from './kafka.type';
 
 @Injectable()
 export class KafkaService implements OnModuleInit {
-  logger = new Logger(KafkaService.name);
-  client: Kafka;
-  pruducer: Producer;
-  consumer: Consumer;
-  clientId: string;
-  groupId: string;
-  producerCache: ProducerCache = {};
-  consumerCache: ConsumerCache = {};
+  private logger = new Logger(KafkaService.name);
+  private client: Kafka;
+  private pruducer: Producer;
+  private consumer: Consumer;
+  private clientId: string;
+  private groupId: string;
+  private producerCache: ProducerCache = {};
+  private consumerCache: ConsumerCache = {};
 
   constructor(private readonly vaultService: VaultService, private readonly configService: ConfigService) {}
 
@@ -113,7 +113,7 @@ export class KafkaService implements OnModuleInit {
     }
   }
 
-  public async receiveTopicMessage(topic: string, handler: any) {
+  public async subscribeTopicMessage(topic: string, handler: any) {
     const consumer = (this.consumerCache[topic] =
       this.consumerCache[topic] ||
       this.client.consumer({

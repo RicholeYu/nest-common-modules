@@ -1,13 +1,17 @@
 import {HttpService} from '@nestjs/axios';
 import {Injectable} from '@nestjs/common';
-import {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {InternalServiceException} from './exception/internal-service.exception';
 
 @Injectable()
 export class RestService {
   constructor(private readonly httpService: HttpService) {}
 
-  request<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T, any>> {
+  get axiosRef() {
+    return this.httpService.axiosRef;
+  }
+
+  request(config: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.httpService
       .request(config)
       .toPromise()

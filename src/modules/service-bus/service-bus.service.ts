@@ -9,11 +9,11 @@ import {ReceiversCache, SendersCache, ServiceBusPolicy, ServiceBusType} from './
 
 @Injectable()
 export class ServiceBusService implements OnModuleInit {
-  topicSendersCache: SendersCache;
-  topicReceiversCache: ReceiversCache;
-  queueSendersCache: SendersCache;
-  queueReceiversCache: ReceiversCache;
-  logger = new Logger(ServiceBusService.name);
+  private topicSendersCache: SendersCache;
+  private topicReceiversCache: ReceiversCache;
+  private queueSendersCache: SendersCache;
+  private queueReceiversCache: ReceiversCache;
+  private logger = new Logger(ServiceBusService.name);
 
   onModuleInit() {
     this.logger.log('Service bus initializing...');

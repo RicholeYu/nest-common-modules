@@ -105,7 +105,7 @@ let KafkaService = KafkaService_1 = class KafkaService {
             this.logger.error(`connect kafka and send topic message failed. TOPIC: ${topic}, MESSAGE: ${JSON.stringify(message)}`);
         }
     }
-    async receiveTopicMessage(topic, handler) {
+    async subscribeTopicMessage(topic, handler) {
         const consumer = (this.consumerCache[topic] =
             this.consumerCache[topic] ||
                 this.client.consumer({
