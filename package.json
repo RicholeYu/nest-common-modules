@@ -7,8 +7,7 @@
   "scripts": {
     "start": "nest start --tsc -w",
     "build": "nest build --tsc",
-    "postbuild": "cp -r src/* dist/",
-    "postinstall": "yarn && yarn build"
+    "postbuild": "cp -r src/* dist/"
   },
   "author": "",
   "license": "ISC"
