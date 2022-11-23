@@ -7,7 +7,8 @@
   "scripts": {
     "start": "nest start --tsc -w",
     "build": "nest build --tsc",
-    "postbuild": "cp -r src/* dist/"
+    "postbuild": "cp -r src/* dist/",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
