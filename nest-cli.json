@@ -2,6 +2,20 @@
   "collection": "@nestjs/schematics",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "tsconfig.json"
+    "tsConfigPath": "apps/common-nest-module/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/common-nest-module",
+  "sourceRoot": "apps/common-nest-module/src",
+  "projects": {
+    "common-nest-module": {
+      "type": "application",
+      "root": "apps/common-nest-module",
+      "entryFile": "main",
+      "sourceRoot": "apps/common-nest-module/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/common-nest-module/tsconfig.app.json"
+      }
+    }
   }
 }
