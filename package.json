@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/apps/common-nest-module/main.js",
-  "type": "dist/apps/common-nest-module/main.ts",
+  "type": "dist/apps/common-nest-module/main.d.ts",
   "scripts": {
     "build": "nest build common-nest-module --tsc -w"
   },
