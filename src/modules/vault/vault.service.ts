@@ -1,5 +1,4 @@
 import {Injectable, Logger, OnModuleInit} from '@nestjs/common';
-import {ConfigService} from '@nestjs/config';
 import Vault, {client} from 'node-vault';
 import fs from 'fs';
 
@@ -8,8 +7,6 @@ export class VaultService implements OnModuleInit {
   private logger = new Logger(VaultService.name);
   private vault: client;
   private config = {};
-
-  constructor(private readonly configService: ConfigService) {}
 
   async onModuleInit() {
     this.logger.log(`Vault Initializing...`);

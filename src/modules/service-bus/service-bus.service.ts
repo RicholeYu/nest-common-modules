@@ -1,5 +1,9 @@
 import {MessageHandlers, ServiceBusClient, ServiceBusReceiver, ServiceBusSender} from '@azure/service-bus';
 import {Injectable, Logger, OnModuleInit} from '@nestjs/common';
+import {validate} from 'class-validator';
+import {ServiceBusMessageDto} from '../../dto/message/service-bus-message.dto';
+import {MessageConnectionException} from '../../exception/message-connection-exception';
+import {MessageValidateException} from '../../exception/message-validate-exception';
 import {RestService} from '../rest/rest.service';
 import {ReceiversCache, SendersCache, ServiceBusPolicy, ServiceBusType} from './service-bus.type';
 
@@ -82,22 +86,52 @@ export class ServiceBusService implements OnModuleInit {
   }
 
   public async sendTopic(topic: string, message: any) {
-    const sender = await this.getTopicSender(topic);
-    sender.sendMessages(message);
+    message = new ServiceBusMessageDto(message);
+    const result = await validate(message);
+
+    if (result.length) {
+      throw new MessageValidateException(result);
+    }
+
+    try {
+      return (await this.getTopicSender(topic)).sendMessages(message);
+    } catch (err) {
+      this.logger.error(`send service bus topic failed: TOPIC: ${topic}, MESSAGE: ${JSON.stringify(message)}`);
+      throw new MessageConnectionException(err);
+    }
   }
 
   public async subscribeTopic(topic: string, handler: MessageHandlers) {
-    const receiver = await this.getTopicReceiver(topic);
-    receiver.subscribe(handler);
+    try {
+      return (await this.getTopicReceiver(topic)).subscribe(handler);
+    } catch (err) {
+      this.logger.error(`subscribe service bus topic failed: TOPIC: ${topic}`);
+      throw new MessageConnectionException(err);
+    }
   }
 
   public async sendQueue(queue: string, message: any) {
-    const sender = await this.getQueueSender(queue);
-    sender.sendMessages(message);
+    message = new ServiceBusMessageDto(message);
+    const result = await validate(message);
+
+    if (result.length) {
+      throw new MessageValidateException(result);
+    }
+
+    try {
+      return (await this.getQueueSender(queue)).sendMessages(message);
+    } catch (err) {
+      this.logger.error(`send service bus queue failed: TOPIC: ${queue}, MESSAGE: ${JSON.stringify(message)}`);
+      throw new MessageConnectionException(err);
+    }
   }
 
   public async subscribeQueue(queue: string, handler: MessageHandlers) {
-    const receiver = await this.getQueueReceiver(queue);
-    receiver.subscribe(handler);
+    try {
+      return (await this.getQueueReceiver(queue)).subscribe(handler);
+    } catch (err) {
+      this.logger.error(`subscribe service bus queue failed: TOPIC: ${queue}`);
+      throw new MessageConnectionException(err);
+    }
   }
 }

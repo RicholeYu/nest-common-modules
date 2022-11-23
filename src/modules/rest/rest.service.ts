@@ -1,16 +1,11 @@
-import {Request} from 'express';
-import {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {Inject, Injectable, Logger, Scope} from '@nestjs/common';
-import {REQUEST} from '@nestjs/core';
 import {HttpService} from '@nestjs/axios';
+import {Injectable} from '@nestjs/common';
+import {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {InternalServiceException} from './exception/internal-service.exception';
 
-/**
- * A custom http service responsible for adding authorization header coming from express to microservice
- */
-@Injectable({scope: Scope.REQUEST})
+@Injectable()
 export class RestService {
-  constructor(@Inject(REQUEST) private readonly expressRequest: Request, private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) {}
 
   get axiosRef(): AxiosInstance {
     return this.httpService.axiosRef;

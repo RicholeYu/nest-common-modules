@@ -2,11 +2,13 @@
   "name": "@pruforce-nest/modules",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/apps/mono/main.js",
-  "types": "dist/apps/mono/main.d.ts",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "scripts": {
-    "start": "nest start mono --tsc -w",
-    "postinstall": "nest build mono --tsc"
+    "start": "nest start --tsc -w",
+    "build": "nest build --tsc",
+    "postbuild": "cp -r src/* dist/",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@azure/service-bus": "^7.7.3",
@@ -16,10 +18,12 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.2.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.1.3",
     "axios": "^1.1.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
-    "kafkajs": "^2.2.2",
+    "cls-rtracer": "^2.6.2",
+    "kafkajs": "^2.2.3",
     "mongodb": "^4.12.0",
     "mongodb-client-encryption": "^2.3.0",
     "nest-router": "^1.0.9",
