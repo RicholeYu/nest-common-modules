@@ -17,7 +17,7 @@ export declare class ServiceBusService implements OnModuleInit {
     private getQueueSender;
     private getQueueReceiver;
     sendTopic(topic: string, message: any): Promise<void>;
-    subscribeTopic(topic: string, handler: MessageHandlers): Promise<{
+    subscribeTopic(topic: string, subscription: string, handler: MessageHandlers): Promise<{
         close(): Promise<void>;
     }>;
     sendQueue(queue: string, message: any): Promise<void>;

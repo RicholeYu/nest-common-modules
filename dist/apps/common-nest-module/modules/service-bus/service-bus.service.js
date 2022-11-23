@@ -54,11 +54,11 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
         });
         return this.topicSendersCache[topic];
     }
-    async getTopicReceiver(topic) {
+    async getTopicReceiver(topic, subscription) {
         if (this.topicReceiversCache[topic]) {
             return this.topicReceiversCache[topic];
         }
-        this.topicReceiversCache[topic] = (await this.createClient('topic', 'listen', topic)).createReceiver(topic, {
+        this.topicReceiversCache[topic] = (await this.createClient('topic', 'listen', topic)).createReceiver(topic, subscription, {
             identifier: topic,
         });
         return this.topicReceiversCache[topic];
@@ -84,16 +84,18 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
             throw new message_validate_exception_1.MessageValidateException(result);
         }
         try {
-            return (await this.getTopicSender(topic)).sendMessages(message);
+            return (await this.getTopicSender(topic)).sendMessages({
+                body: message,
+            });
         }
         catch (err) {
             this.logger.error(`send service bus topic failed: TOPIC: ${topic}, MESSAGE: ${JSON.stringify(message)}`);
             throw new message_connection_exception_1.MessageConnectionException(err);
         }
     }
-    async subscribeTopic(topic, handler) {
+    async subscribeTopic(topic, subscription, handler) {
         try {
-            return (await this.getTopicReceiver(topic)).subscribe(handler);
+            return (await this.getTopicReceiver(topic, subscription)).subscribe(handler);
         }
         catch (err) {
             this.logger.error(`subscribe service bus topic failed: TOPIC: ${topic}`);
@@ -107,7 +109,9 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
             throw new message_validate_exception_1.MessageValidateException(result);
         }
         try {
-            return (await this.getQueueSender(queue)).sendMessages(message);
+            return (await this.getQueueSender(queue)).sendMessages({
+                body: message,
+            });
         }
         catch (err) {
             this.logger.error(`send service bus queue failed: TOPIC: ${queue}, MESSAGE: ${JSON.stringify(message)}`);

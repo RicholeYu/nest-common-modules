@@ -53,14 +53,18 @@ export class ServiceBusService implements OnModuleInit {
     return this.topicSendersCache[topic];
   }
 
-  private async getTopicReceiver(topic: string): Promise<ServiceBusReceiver> {
+  private async getTopicReceiver(topic: string, subscription: string): Promise<ServiceBusReceiver> {
     if (this.topicReceiversCache[topic]) {
       return this.topicReceiversCache[topic];
     }
 
-    this.topicReceiversCache[topic] = (await this.createClient('topic', 'listen', topic)).createReceiver(topic, {
-      identifier: topic,
-    });
+    this.topicReceiversCache[topic] = (await this.createClient('topic', 'listen', topic)).createReceiver(
+      topic,
+      subscription,
+      {
+        identifier: topic,
+      },
+    );
 
     return this.topicReceiversCache[topic];
   }
@@ -94,16 +98,18 @@ export class ServiceBusService implements OnModuleInit {
     }
 
     try {
-      return (await this.getTopicSender(topic)).sendMessages(message);
+      return (await this.getTopicSender(topic)).sendMessages({
+        body: message,
+      });
     } catch (err) {
       this.logger.error(`send service bus topic failed: TOPIC: ${topic}, MESSAGE: ${JSON.stringify(message)}`);
       throw new MessageConnectionException(err);
     }
   }
 
-  public async subscribeTopic(topic: string, handler: MessageHandlers) {
+  public async subscribeTopic(topic: string, subscription: string, handler: MessageHandlers) {
     try {
-      return (await this.getTopicReceiver(topic)).subscribe(handler);
+      return (await this.getTopicReceiver(topic, subscription)).subscribe(handler);
     } catch (err) {
       this.logger.error(`subscribe service bus topic failed: TOPIC: ${topic}`);
       throw new MessageConnectionException(err);
@@ -119,7 +125,9 @@ export class ServiceBusService implements OnModuleInit {
     }
 
     try {
-      return (await this.getQueueSender(queue)).sendMessages(message);
+      return (await this.getQueueSender(queue)).sendMessages({
+        body: message,
+      });
     } catch (err) {
       this.logger.error(`send service bus queue failed: TOPIC: ${queue}, MESSAGE: ${JSON.stringify(message)}`);
       throw new MessageConnectionException(err);
