@@ -7,8 +7,7 @@
   "scripts": {
     "start": "nest start --tsc -w",
     "build": "nest build --tsc",
-    "postbuild": "cp -r src/* dist/",
-    "postinstall": "npm run build"
+    "postbuild": "cp -r src/* dist/"
   },
   "dependencies": {
     "@azure/service-bus": "^7.7.3",
