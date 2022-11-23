@@ -5,10 +5,12 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
+    "prestart": "npm run clean",
     "start": "nest start --tsc -w",
-    "build": "nest build --tsc",
+    "prebuild": "npm run clean",
+    "build": "nest build --tsc -c tsconfig.json",
     "postbuild": "cp -r src/* dist/",
-    "postinstall": "npm run build"
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@azure/service-bus": "^7.7.3",
