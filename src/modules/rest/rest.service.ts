@@ -7,7 +7,7 @@ import {InternalServiceException} from './exception/internal-service.exception';
 export class RestService {
   constructor(private readonly httpService: HttpService) {}
 
-  get axiosRef(): AxiosInstance {
+  get axiosRef() {
     return this.httpService.axiosRef;
   }
 
@@ -20,7 +20,7 @@ export class RestService {
       });
   }
 
-  delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.httpService
       .delete(url, config)
       .toPromise()
@@ -29,7 +29,7 @@ export class RestService {
       });
   }
 
-  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  get(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.httpService
       .get(url, config)
       .toPromise()
@@ -38,7 +38,7 @@ export class RestService {
       });
   }
 
-  head<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  head(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.httpService
       .head(url, config)
       .toPromise()
@@ -47,7 +47,7 @@ export class RestService {
       });
   }
 
-  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  patch<T = any>(url: string, data?: T, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.httpService
       .patch(url, data, config)
       .toPromise()
@@ -56,7 +56,7 @@ export class RestService {
       });
   }
 
-  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  post<T = any>(url: string, data?: T, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.httpService
       .post(url, data, config)
       .toPromise()
@@ -65,7 +65,7 @@ export class RestService {
       });
   }
 
-  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  put<T = any>(url: string, data?: T, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.httpService
       .put(url, data, config)
       .toPromise()
