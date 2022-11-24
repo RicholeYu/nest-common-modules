@@ -1,1 +1,0 @@
-{"version":3,"file":"message-connection-exception.js","sourceRoot":"","sources":["../../../../apps/common-nest-module/src/exception/message-connection-exception.ts"],"names":[],"mappings":";;;AAAA,2CAAuD;AAEvD,MAAa,0BAA2B,SAAQ,gCAAuB;IAGrE,YAAY,KAAU;QACpB,KAAK,EAAE,CAAC;QACR,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;IACrB,CAAC;CACF;AAPD,gEAOC"}

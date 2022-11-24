@@ -1,11 +1,14 @@
 {
-  "name": "@pruforce-coe/common-nest-module",
+  "name": "@pruforce-coe/common-nestjs-module",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/apps/common-nest-module/main.js",
-  "types": "dist/apps/common-nest-module/main.d.ts",
+  "main": "dist/apps/common-nestjs-module/main.js",
+  "types": "dist/apps/common-nestjs-module/main.d.ts",
   "scripts": {
-    "build": "nest build common-nest-module --tsc -w"
+    "start": "nest start common-nestjs-module --tsc -w",
+    "prebuild": "rimraf dist",
+    "build": "nest build common-nestjs-module --tsc",
+    "example": "nest start example --tsc -w"
   },
   "devDependencies": {
     "@azure/service-bus": "^7.7.3",
