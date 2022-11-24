@@ -18,7 +18,7 @@ let KafkaModule = KafkaModule_1 = class KafkaModule {
         Reflect.set(kafka_service_1.KafkaService, 'groupId', options.groupId);
         return {
             module: KafkaModule_1,
-            imports: [vault_module_1.VaultModule, config_1.ConfigModule],
+            imports: [vault_module_1.VaultModule.forRoot(['azure']), config_1.ConfigModule],
             providers: [
                 kafka_service_1.KafkaService,
                 {

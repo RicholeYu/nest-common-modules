@@ -103,7 +103,6 @@ export class ServiceBusService implements OnModuleInit {
       });
     } catch (err) {
       this.logger.error(`send service bus topic failed: TOPIC: ${topic}, MESSAGE: ${JSON.stringify(message)}`);
-      throw new MessageConnectionException(err);
     }
   }
 
@@ -112,7 +111,6 @@ export class ServiceBusService implements OnModuleInit {
       return (await this.getTopicReceiver(topic, subscription)).subscribe(handler);
     } catch (err) {
       this.logger.error(`subscribe service bus topic failed: TOPIC: ${topic}`);
-      throw new MessageConnectionException(err);
     }
   }
 
@@ -139,7 +137,6 @@ export class ServiceBusService implements OnModuleInit {
       return (await this.getQueueReceiver(queue)).subscribe(handler);
     } catch (err) {
       this.logger.error(`subscribe service bus queue failed: TOPIC: ${queue}`);
-      throw new MessageConnectionException(err);
     }
   }
 }

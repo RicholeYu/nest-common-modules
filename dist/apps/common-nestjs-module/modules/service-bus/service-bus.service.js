@@ -90,7 +90,6 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
         }
         catch (err) {
             this.logger.error(`send service bus topic failed: TOPIC: ${topic}, MESSAGE: ${JSON.stringify(message)}`);
-            throw new message_connection_exception_1.MessageConnectionException(err);
         }
     }
     async subscribeTopic(topic, subscription, handler) {
@@ -99,7 +98,6 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
         }
         catch (err) {
             this.logger.error(`subscribe service bus topic failed: TOPIC: ${topic}`);
-            throw new message_connection_exception_1.MessageConnectionException(err);
         }
     }
     async sendQueue(queue, message) {
@@ -124,7 +122,6 @@ let ServiceBusService = ServiceBusService_1 = class ServiceBusService {
         }
         catch (err) {
             this.logger.error(`subscribe service bus queue failed: TOPIC: ${queue}`);
-            throw new message_connection_exception_1.MessageConnectionException(err);
         }
     }
 };

@@ -1,11 +1,11 @@
 import {Module} from '@nestjs/common';
-import {ConfigModule} from '@nestjs/config';
 import {ExampleService} from './example.service';
-import {KafkaExampleModule} from './kafka-example/kafka-example.module';
-import {ServiceBusExampleModule} from './service-bus-example/service-bus-example.module';
+import {KafkaExampleModule} from './modules/kafka-example/kafka-example.module';
+import {ServiceBusExampleModule} from './modules/service-bus-example/service-bus-example.module';
+import {VaultExampleModule} from './modules/vault-example/vault-example.module';
 
 @Module({
-  imports: [KafkaExampleModule, ServiceBusExampleModule],
+  imports: [KafkaExampleModule, ServiceBusExampleModule, VaultExampleModule],
   providers: [ExampleService],
 })
 export class ExampleModule {}

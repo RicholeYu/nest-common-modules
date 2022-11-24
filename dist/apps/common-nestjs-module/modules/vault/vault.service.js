@@ -61,7 +61,7 @@ let VaultService = VaultService_1 = class VaultService {
         var _a;
         const vaultSecretEngine = process.env.VAULT_SECRET_ENGINE;
         const vaultSecretDataPath = process.env.VAULT_SECRET_DATA_PATH;
-        const vaultKey = `${vaultSecretEngine}/data/${vaultSecretDataPath}${key}`;
+        const vaultKey = `${vaultSecretEngine}/data/${vaultSecretDataPath}/${key}`;
         this.logger.log(`Getting vault: ${vaultKey}`);
         const result = await this.vault.read(vaultKey);
         this.config = {

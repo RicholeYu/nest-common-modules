@@ -12,7 +12,7 @@ export class KafkaModule {
 
     return {
       module: KafkaModule,
-      imports: [VaultModule, ConfigModule],
+      imports: [VaultModule.forRoot(['azure']), ConfigModule],
       providers: [
         KafkaService,
         {

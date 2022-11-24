@@ -1,12 +1,9 @@
 {
   "collection": "@nestjs/schematics",
   "compilerOptions": {
-    "webpack": true,
-    "tsConfigPath": "apps/common-nestjs-module/tsconfig.app.json"
+    "webpack": true
   },
   "monorepo": true,
-  "root": "apps/common-nestjs-module",
-  "sourceRoot": "apps/common-nestjs-module/src",
   "projects": {
     "common-nestjs-module": {
       "type": "application",

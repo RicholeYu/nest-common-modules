@@ -51,7 +51,7 @@ export class VaultService implements OnModuleInit {
   private async getVault(key: string) {
     const vaultSecretEngine = process.env.VAULT_SECRET_ENGINE;
     const vaultSecretDataPath = process.env.VAULT_SECRET_DATA_PATH;
-    const vaultKey = `${vaultSecretEngine}/data/${vaultSecretDataPath}${key}`;
+    const vaultKey = `${vaultSecretEngine}/data/${vaultSecretDataPath}/${key}`;
 
     this.logger.log(`Getting vault: ${vaultKey}`);
 
