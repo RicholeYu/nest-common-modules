@@ -5,3 +5,7 @@ export interface ProducerCache {
 export interface ConsumerCache {
     [topic: string]: Consumer;
 }
+export interface KafkaModuleOption {
+    clientId: string;
+    groupId: string;
+}

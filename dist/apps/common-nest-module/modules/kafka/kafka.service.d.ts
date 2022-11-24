@@ -6,12 +6,10 @@ export declare class KafkaService implements OnModuleInit {
     private readonly configService;
     private logger;
     private client;
-    private pruducer;
-    private consumer;
-    private clientId;
-    private groupId;
     private producerCache;
     private consumerCache;
+    private clientId;
+    private groupId;
     constructor(vaultService: VaultService, configService: ConfigService);
     onModuleInit(): Promise<void>;
     private initKafkaConnection;

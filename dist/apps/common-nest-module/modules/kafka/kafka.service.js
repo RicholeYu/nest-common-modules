@@ -42,8 +42,9 @@ let KafkaService = KafkaService_1 = class KafkaService {
         const kafkaSecurityProtocol = this.configService.get('KAFKA_SECURITY_PROTOCOL');
         const kafkaConnection = this.configService.get('KAFKA_SERVER_HOST_PORT');
         const kafkaSaslMechanisms = this.configService.get('KAFKA_SASL_MECHANISMS');
-        this.clientId = this.configService.get('npm_package_name');
-        this.groupId = this.clientId;
+        const clientId = (this.clientId = Reflect.get(KafkaService_1, 'clientId'));
+        this.groupId = Reflect.get(KafkaService_1, 'groupId');
+        console.log(clientId, this.groupId);
         if (!kafkaConnection) {
             this.logger.error('lack of environment variable KAFKA_SERVER_HOST_PORT, failed to connect kafka');
         }
@@ -52,7 +53,7 @@ let KafkaService = KafkaService_1 = class KafkaService {
             const password = this.vaultService.get('kafka_sasl_password');
             if (username && password) {
                 this.client = new kafkajs_1.Kafka({
-                    clientId: this.clientId,
+                    clientId,
                     brokers: [kafkaConnection],
                     sasl: {
                         username,
@@ -68,7 +69,7 @@ let KafkaService = KafkaService_1 = class KafkaService {
         this.client =
             this.client ||
                 new kafkajs_1.Kafka({
-                    clientId: this.clientId,
+                    clientId,
                     brokers: [kafkaConnection],
                     logCreator: () => ({ level, log }) => {
                         switch (level) {

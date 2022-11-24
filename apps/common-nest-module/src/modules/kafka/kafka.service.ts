@@ -12,12 +12,10 @@ import {ConsumerCache, ProducerCache} from './kafka.type';
 export class KafkaService implements OnModuleInit {
   private logger = new Logger(KafkaService.name);
   private client: Kafka;
-  private pruducer: Producer;
-  private consumer: Consumer;
-  private clientId: string;
-  private groupId: string;
   private producerCache: ProducerCache = {};
   private consumerCache: ConsumerCache = {};
+  private clientId: string;
+  private groupId: string;
 
   constructor(private readonly vaultService: VaultService, private readonly configService: ConfigService) {}
 
@@ -36,8 +34,10 @@ export class KafkaService implements OnModuleInit {
     const kafkaSecurityProtocol = this.configService.get('KAFKA_SECURITY_PROTOCOL');
     const kafkaConnection = this.configService.get('KAFKA_SERVER_HOST_PORT');
     const kafkaSaslMechanisms = this.configService.get('KAFKA_SASL_MECHANISMS');
-    this.clientId = this.configService.get('npm_package_name');
-    this.groupId = this.clientId;
+    const clientId = (this.clientId = Reflect.get(KafkaService, 'clientId'));
+    this.groupId = Reflect.get(KafkaService, 'groupId');
+
+    console.log(clientId, this.groupId);
 
     if (!kafkaConnection) {
       this.logger.error('lack of environment variable KAFKA_SERVER_HOST_PORT, failed to connect kafka');
@@ -49,7 +49,7 @@ export class KafkaService implements OnModuleInit {
 
       if (username && password) {
         this.client = new Kafka({
-          clientId: this.clientId,
+          clientId,
           brokers: [kafkaConnection],
           sasl: {
             username,
@@ -67,7 +67,7 @@ export class KafkaService implements OnModuleInit {
     this.client =
       this.client ||
       new Kafka({
-        clientId: this.clientId,
+        clientId,
         brokers: [kafkaConnection],
         logCreator:
           () =>
