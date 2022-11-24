@@ -13,13 +13,23 @@ const config_1 = require("@nestjs/config");
 const vault_module_1 = require("../vault/vault.module");
 const kafka_service_1 = require("./kafka.service");
 let KafkaModule = KafkaModule_1 = class KafkaModule {
-    static forRoot(options) {
+    static feature(options) {
         Reflect.set(kafka_service_1.KafkaService, 'clientId', options.clientId);
         Reflect.set(kafka_service_1.KafkaService, 'groupId', options.groupId);
         return {
             module: KafkaModule_1,
             imports: [vault_module_1.VaultModule, config_1.ConfigModule],
-            providers: [kafka_service_1.KafkaService],
+            providers: [
+                kafka_service_1.KafkaService,
+                {
+                    provide: 'clientId',
+                    useValue: options.clientId,
+                },
+                {
+                    provide: 'groupId',
+                    useValue: options.groupId,
+                },
+            ],
             exports: [kafka_service_1.KafkaService],
         };
     }

@@ -1,8 +1,8 @@
-import {Injectable, Logger, OnModuleInit} from '@nestjs/common';
+import {Inject, Injectable, Logger, OnModuleInit} from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import {logLevel} from '@nestjs/microservices/external/kafka.interface';
 import {validate} from 'class-validator';
-import {Consumer, Kafka, Producer} from 'kafkajs';
+import {Kafka} from 'kafkajs';
 import {KafkaMessageDto} from '../../dto/message/kafka-message.dto';
 import {MessageValidateException} from '../../exception/message-validate-exception';
 import {VaultService} from '../vault/vault.service';
@@ -14,10 +14,13 @@ export class KafkaService implements OnModuleInit {
   private client: Kafka;
   private producerCache: ProducerCache = {};
   private consumerCache: ConsumerCache = {};
-  private clientId: string;
-  private groupId: string;
 
-  constructor(private readonly vaultService: VaultService, private readonly configService: ConfigService) {}
+  constructor(
+    private readonly vaultService: VaultService,
+    private readonly configService: ConfigService,
+    @Inject('clientId') private readonly clientId: string,
+    @Inject('groupId') private readonly groupId: string,
+  ) {}
 
   async onModuleInit() {
     this.logger.log('kafka initializing...');
@@ -34,10 +37,6 @@ export class KafkaService implements OnModuleInit {
     const kafkaSecurityProtocol = this.configService.get('KAFKA_SECURITY_PROTOCOL');
     const kafkaConnection = this.configService.get('KAFKA_SERVER_HOST_PORT');
     const kafkaSaslMechanisms = this.configService.get('KAFKA_SASL_MECHANISMS');
-    const clientId = (this.clientId = Reflect.get(KafkaService, 'clientId'));
-    this.groupId = Reflect.get(KafkaService, 'groupId');
-
-    console.log(clientId, this.groupId);
 
     if (!kafkaConnection) {
       this.logger.error('lack of environment variable KAFKA_SERVER_HOST_PORT, failed to connect kafka');
@@ -49,7 +48,7 @@ export class KafkaService implements OnModuleInit {
 
       if (username && password) {
         this.client = new Kafka({
-          clientId,
+          clientId: this.clientId,
           brokers: [kafkaConnection],
           sasl: {
             username,
@@ -67,7 +66,7 @@ export class KafkaService implements OnModuleInit {
     this.client =
       this.client ||
       new Kafka({
-        clientId,
+        clientId: this.clientId,
         brokers: [kafkaConnection],
         logCreator:
           () =>

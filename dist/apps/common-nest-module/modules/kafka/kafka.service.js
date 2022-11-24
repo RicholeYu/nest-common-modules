@@ -8,6 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var KafkaService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KafkaService = void 0;
@@ -20,9 +23,11 @@ const kafka_message_dto_1 = require("../../dto/message/kafka-message.dto");
 const message_validate_exception_1 = require("../../exception/message-validate-exception");
 const vault_service_1 = require("../vault/vault.service");
 let KafkaService = KafkaService_1 = class KafkaService {
-    constructor(vaultService, configService) {
+    constructor(vaultService, configService, clientId, groupId) {
         this.vaultService = vaultService;
         this.configService = configService;
+        this.clientId = clientId;
+        this.groupId = groupId;
         this.logger = new common_1.Logger(KafkaService_1.name);
         this.producerCache = {};
         this.consumerCache = {};
@@ -42,9 +47,6 @@ let KafkaService = KafkaService_1 = class KafkaService {
         const kafkaSecurityProtocol = this.configService.get('KAFKA_SECURITY_PROTOCOL');
         const kafkaConnection = this.configService.get('KAFKA_SERVER_HOST_PORT');
         const kafkaSaslMechanisms = this.configService.get('KAFKA_SASL_MECHANISMS');
-        const clientId = (this.clientId = Reflect.get(KafkaService_1, 'clientId'));
-        this.groupId = Reflect.get(KafkaService_1, 'groupId');
-        console.log(clientId, this.groupId);
         if (!kafkaConnection) {
             this.logger.error('lack of environment variable KAFKA_SERVER_HOST_PORT, failed to connect kafka');
         }
@@ -53,7 +55,7 @@ let KafkaService = KafkaService_1 = class KafkaService {
             const password = this.vaultService.get('kafka_sasl_password');
             if (username && password) {
                 this.client = new kafkajs_1.Kafka({
-                    clientId,
+                    clientId: this.clientId,
                     brokers: [kafkaConnection],
                     sasl: {
                         username,
@@ -69,7 +71,7 @@ let KafkaService = KafkaService_1 = class KafkaService {
         this.client =
             this.client ||
                 new kafkajs_1.Kafka({
-                    clientId,
+                    clientId: this.clientId,
                     brokers: [kafkaConnection],
                     logCreator: () => ({ level, log }) => {
                         switch (level) {
@@ -133,7 +135,10 @@ let KafkaService = KafkaService_1 = class KafkaService {
 };
 KafkaService = KafkaService_1 = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [vault_service_1.VaultService, config_1.ConfigService])
+    __param(2, (0, common_1.Inject)('clientId')),
+    __param(3, (0, common_1.Inject)('groupId')),
+    __metadata("design:paramtypes", [vault_service_1.VaultService,
+        config_1.ConfigService, String, String])
 ], KafkaService);
 exports.KafkaService = KafkaService;
 //# sourceMappingURL=kafka.service.js.map
